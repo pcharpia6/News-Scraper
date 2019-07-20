@@ -7,6 +7,16 @@ $.getJSON("/articles", function(data) {
   }
 });
 
+$(document).on("click", ".get-new-articles", function() {
+  $.ajax({
+    method: "GET",
+    url: "/scrape"
+  })
+  .then(function() {
+    setTimeout(function(){ location.reload() }, 2000);
+    
+  })
+})
 
 // Whenever someone clicks a add note button
 $(document).on("click", ".get-note-button", function() {
