@@ -8,6 +8,7 @@ var cheerio = require("cheerio");
 
 // Routes
 module.exports = function(app) {
+	
 // A GET route for scraping the NPR website
 	app.get("/scrape", function (req, res) {
 		// First, we grab the body of the html with axios
@@ -26,12 +27,13 @@ module.exports = function(app) {
 					.text();
 				result.synopsis = $(this)
 					.find(".teaser").children()
-					.text()
+					.text();
 				result.link = $(this)
 					.find(".title").children()
 					.attr("href");
 				
 				// Create a new Article using the `result` object built from scraping
+				console.log(result);
 				db.Article.create(result)
 				.then(function (dbArticle) {
 					// View the added result in the console
@@ -49,12 +51,15 @@ module.exports = function(app) {
 		});
 
 	// Route for getting all Articles from the db
-	app.get("/articles", function (req, res) {
+	app.get("/", function (req, res) {
 		// Grab every document in the Articles collection
 		db.Article.find({})
 			.then(function (dbArticle) {
 				// If we were able to successfully find Articles, send them back to the client
-				res.json(dbArticle);
+				var hbsObject = {
+					articles: dbArticle
+				}
+				res.render("index", hbsObject);
 			})
 			.catch(function (err) {
 				// If an error occurred, send it to the client

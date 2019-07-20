@@ -8,8 +8,8 @@ $.getJSON("/articles", function(data) {
 });
 
 
-// Whenever someone clicks a p tag
-$(document).on("click", "p", function() {
+// Whenever someone clicks a add note button
+$(document).on("click", ".get-note-button", function() {
   // Empty the notes from the note section
   $("#notes").empty();
   // Save the id from the p tag

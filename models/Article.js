@@ -33,6 +33,9 @@ var ArticleSchema = new Schema({
       message: "There is already an article by that title."
     },
   },
+  synopsis: {
+    type: String
+  },
   // `link` is required and of type String
   link: {
     type: String,
